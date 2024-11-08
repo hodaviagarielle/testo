@@ -1,0 +1,138 @@
+*** Pour compléter cette interface, il faudrait créer :ownerhome
+
+Un système de gestion des notifications
+
+*** TenantManagementScreen :
+
+Ajouter les traductions si nécessaire
+
+*** AnalyticsScreen :
+Remplacer les données simulées par de vraies données provenant de votre backend
+Ajuster les styles et couleurs selon votre charte graphique
+Ajouter des traductions si nécessaire
+
+
+*** SettingsScreen :
+Implémenter la logique manquante pour le changement de thème et les notifications
+
+*** ProfileScreen :
+Voulez-vous que j'ajoute d'autres fonctionnalités comme :
+
+La possibilité de changer la photo de profil ?
+Un bouton pour changer le mot de passe ?
+D'autres champs d'information ?
+
+*** AboutScreen :
+Vous devrez personnaliser :
+
+Le contenu de la politique de confidentialité
+Le contenu des conditions d'utilisation
+Les informations de contact (email, téléphone, etc.)
+
+Voulez-vous que je modifie quelque chose dans ces écrans ?
+
+*** security :
+Note : Certaines fonctionnalités comme le changement de mot de passe ou l'activation de la 2FA nécessitent une implémentation côté backend. J'ai laissé des commentaires dans le code pour indiquer où vous devrez ajouter votre logique métier.
+
+*** tenanthome :
+J'ai ajouté les routes manquantes qui étaient référencées dans le TenantHomeScreen.dart. Voici les principales modifications :
+
+Ajout des imports pour les nouveaux écrans
+Ajout des nouvelles routes pour le locataire :
+
+/property-search
+/saved-searches
+/lease-details
+/maintenance-requests
+/report-issue
+/documents
+/payment
+/contact-owner
+/notifications
+
+
+
+Note importante : Vous devrez créer les écrans correspondants dans le dossier lib/screens/tenant/ avec les noms suivants :
+
+PropertySearchScreen
+SavedSearchesScreen
+LeaseDetailsScreen
+MaintenanceRequestsScreen
+ReportIssueScreen
+DocumentsScreen
+PaymentScreen
+ContactOwnerScreen
+NotificationsScreen
+
+Chaque écran devra être créé avec la structure de base d'un widget StatefulWidget ou StatelessWidget selon vos besoins.
+
+Je vais analyser chaque fichier pour identifier les parties qui nécessitent une implémentation.
+
+
+
+
+
+
+TenantHomeScreen.dart:
+
+
+
+
+
+La navigation vers différentes routes qui doivent être définies :
+
+'/lease-details'
+'/maintenance-requests'
+'/report-issue'
+'/documents'
+'/payment'
+'/contact-owner'
+'/notifications'
+'/profile'
+
+
+La gestion des indices du BottomNavigationBar pour la navigation entre les différentes sections
+Les modèles de données pour :
+
+rentalInfo
+maintenanceRequests
+paymentHistory
+announcements
+savedSearches
+propertyResults
+
+
+
+Il faudrait également s'assurer que :
+
+Tous les services (AuthService, TenantPropertyService, TenantDashboardService) sont correctement implémentés
+Les modèles de données (UserProfile, Property, autres modèles référencés) sont définis
+Les routes sont configurées dans le fichier principal de l'application
+Les thèmes et styles sont cohérents à travers l'application
+La gestion des erreurs est robuste
+Les traductions sont gérées de manière centralisée (actuellement en français directement dans le code)
+
+
+gestion proprietes owner and tenant :
+
+
+// OU ajoutez un bouton dans une interface admin existante
+ElevatedButton(
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => DatabaseUpdateScreen()),
+    );
+  },
+  child: Text('Mise à jour de la base de données'),
+)
+
+Pour exécuter la mise à jour :
+
+Naviguez vers l'écran de mise à jour dans votre application
+Appuyez sur le bouton "Démarrer la mise à jour"
+Attendez que le processus se termine
+Vérifiez les logs pour voir les résultats
+
+
+

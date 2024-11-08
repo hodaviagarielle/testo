@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "496894239361",
+    "project_id": "localink-952d0",
+    "storage_bucket": "localink-952d0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496894239361:android:b68503cd93912a8fc7e380",
+        "android_client_info": {
+          "package_name": "com.example.localink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496894239361-q9mhkp0vkrsof0r88aeo22sph541nase.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.localink",
+            "certificate_hash": "5c1e7cb2c7a470a5563539420a497eb07fc4fcaf"
+          }
+        },
+        {
+          "client_id": "496894239361-mite4idku8orq6p3a53m05ueetma68g4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcz98G1cSKZ-OIBWIiMj7Ae_tXlyok3sE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "496894239361-mite4idku8orq6p3a53m05ueetma68g4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "496894239361-6od3mh6nbqja8i3p19g8194aqttptk0j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.localink"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

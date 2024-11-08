@@ -1,0 +1,314 @@
+# Structure des Services et Modèles par Écran
+
+## 1. PropertySearchScreen (Recherche de propriétés)
+
+### Modèles
+```dart
+class Property {
+  final String id;
+  final String title;
+  final String address;
+  final double price;
+  final int rooms;
+  final double surface;
+  final List<String> photos;
+  final Map<String, dynamic> amenities;
+  final String description;
+  final GeoPoint location;
+  final String ownerId;
+  final DateTime availableFrom;
+  final PropertyStatus status;
+}
+
+class SearchFilter {
+  final double? minPrice;
+  final double? maxPrice;
+  final int? minRooms;
+  final int? maxRooms;
+  final double? minSurface;
+  final double? maxSurface;
+  final List<String>? amenities;
+  final GeoPoint? location;
+  final double? radius;
+}
+```
+
+### Services
+```dart
+class PropertySearchService {
+  Future<List<Property>> searchProperties(SearchFilter filter);
+  Future<List<Property>> getRecommendedProperties();
+  Future<void> saveSearch(SearchFilter filter);
+  Future<List<Property>> getNearbyProperties(GeoPoint location);
+}
+```
+
+## 2. SavedSearchesScreen (Recherches sauvegardées)
+
+### Modèles
+```dart
+class SavedSearch {
+  final String id;
+  final String name;
+  final SearchFilter filter;
+  final DateTime createdAt;
+  final bool notificationsEnabled;
+}
+```
+
+### Services
+```dart
+class SavedSearchService {
+  Future<List<SavedSearch>> getSavedSearches(String userId);
+  Future<void> deleteSavedSearch(String searchId);
+  Future<void> updateSavedSearch(SavedSearch search);
+  Future<void> toggleNotifications(String searchId, bool enabled);
+}
+```
+
+## 3. LeaseDetailsScreen (Détails du bail)
+
+### Modèles
+```dart
+class Lease {
+  final String id;
+  final String propertyId;
+  final String tenantId;
+  final String ownerId;
+  final DateTime startDate;
+  final DateTime endDate;
+  final double rent;
+  final double deposit;
+  final List<String> documents;
+  final LeaseStatus status;
+}
+
+class LeaseDocument {
+  final String id;
+  final String name;
+  final String url;
+  final DateTime uploadDate;
+  final DocumentType type;
+}
+```
+
+### Services
+```dart
+class LeaseService {
+  Future<Lease> getCurrentLease(String tenantId);
+  Future<List<LeaseDocument>> getLeaseDocuments(String leaseId);
+  Future<void> downloadDocument(String documentId);
+  Future<void> requestLeaseRenewal(String leaseId);
+  Future<void> submitNoticeToVacate(String leaseId);
+}
+```
+
+## 4. MaintenanceRequestsScreen (Demandes de maintenance)
+
+### Modèles
+```dart
+class MaintenanceRequest {
+  final String id;
+  final String title;
+  final String description;
+  final DateTime createdAt;
+  final DateTime? resolvedAt;
+  final List<String> photos;
+  final MaintenanceStatus status;
+  final String propertyId;
+  final String tenantId;
+  final List<MaintenanceUpdate> updates;
+  final Priority priority;
+}
+
+class MaintenanceUpdate {
+  final String id;
+  final String message;
+  final DateTime timestamp;
+  final String authorId;
+  final UpdateType type;
+}
+```
+
+### Services
+```dart
+class MaintenanceService {
+  Future<List<MaintenanceRequest>> getMaintenanceRequests(String tenantId);
+  Future<MaintenanceRequest> getRequestDetails(String requestId);
+  Future<void> addUpdate(String requestId, String message);
+  Future<void> uploadPhoto(String requestId, File photo);
+  Future<void> updateRequestStatus(String requestId, MaintenanceStatus status);
+}
+```
+
+## 5. ReportIssueScreen (Signalement de problème)
+
+### Modèles
+```dart
+class Issue {
+  final String id;
+  final String title;
+  final String description;
+  final DateTime reportedAt;
+  final IssueType type;
+  final Priority priority;
+  final List<String> photos;
+  final String propertyId;
+  final String tenantId;
+}
+```
+
+### Services
+```dart
+class IssueReportingService {
+  Future<String> createIssue(Issue issue);
+  Future<void> uploadIssuePhotos(String issueId, List<File> photos);
+  Future<List<IssueType>> getIssueTypes();
+  Future<void> updateIssue(String issueId, Map<String, dynamic> updates);
+}
+```
+
+## 6. DocumentsScreen (Documents)
+
+### Modèles
+```dart
+class TenantDocument {
+  final String id;
+  final String name;
+  final String url;
+  final DateTime uploadDate;
+  final DocumentType type;
+  final DocumentStatus status;
+  final String? comment;
+}
+```
+
+### Services
+```dart
+class DocumentService {
+  Future<List<TenantDocument>> getTenantDocuments(String tenantId);
+  Future<void> uploadDocument(File file, DocumentType type);
+  Future<void> downloadDocument(String documentId);
+  Future<void> deleteDocument(String documentId);
+  Future<void> shareDocument(String documentId, String recipientId);
+}
+```
+
+## 7. PaymentScreen (Paiements)
+
+### Modèles
+```dart
+class Payment {
+  final String id;
+  final double amount;
+  final DateTime dueDate;
+  final DateTime? paidDate;
+  final PaymentStatus status;
+  final PaymentType type;
+  final String leaseId;
+  final String? transactionId;
+}
+
+class PaymentMethod {
+  final String id;
+  final String type;
+  final String last4;
+  final String? cardBrand;
+  final bool isDefault;
+}
+```
+
+### Services
+```dart
+class PaymentService {
+  Future<List<Payment>> getPaymentHistory(String tenantId);
+  Future<Payment> processPayment(String paymentId, PaymentMethod method);
+  Future<List<PaymentMethod>> getPaymentMethods(String tenantId);
+  Future<void> addPaymentMethod(PaymentMethod method);
+  Future<void> setDefaultPaymentMethod(String methodId);
+  Future<double> getRentBalance(String leaseId);
+}
+```
+
+## 8. ContactOwnerScreen (Contact propriétaire)
+
+### Modèles
+```dart
+class Message {
+  final String id;
+  final String content;
+  final DateTime timestamp;
+  final String senderId;
+  final String receiverId;
+  final MessageStatus status;
+  final List<String>? attachments;
+}
+
+class Conversation {
+  final String id;
+  final List<String> participants;
+  final DateTime lastMessageTime;
+  final Message? lastMessage;
+}
+```
+
+### Services
+```dart
+class MessagingService {
+  Future<List<Message>> getMessages(String conversationId);
+  Future<void> sendMessage(Message message);
+  Future<void> markAsRead(String messageId);
+  Future<Conversation> getOrCreateConversation(String ownerId);
+  Stream<List<Message>> streamMessages(String conversationId);
+}
+```
+
+## 9. NotificationsScreen (Notifications)
+
+### Modèles
+```dart
+class Notification {
+  final String id;
+  final String title;
+  final String message;
+  final DateTime timestamp;
+  final NotificationType type;
+  final String? relatedId;
+  final bool isRead;
+  final Map<String, dynamic>? additionalData;
+}
+```
+
+### Services
+```dart
+class NotificationService {
+  Future<List<Notification>> getNotifications(String tenantId);
+  Future<void> markAsRead(String notificationId);
+  Future<void> markAllAsRead();
+  Future<void> deleteNotification(String notificationId);
+  Future<void> updateNotificationPreferences(Map<String, bool> preferences);
+  Stream<List<Notification>> streamNotifications(String tenantId);
+}
+
+class NotificationPreferenceService {
+  Future<Map<String, bool>> getNotificationPreferences(String userId);
+  Future<void> updateNotificationPreferences(String userId, Map<String, bool> preferences);
+  Future<void> registerDeviceToken(String userId, String token);
+}
+```
+
+## Enums Communs
+```dart
+enum PropertyStatus { available, rented, maintenance }
+enum LeaseStatus { active, pending, terminated, expired }
+enum DocumentType { lease, invoice, notice, other }
+enum MaintenanceStatus { pending, inProgress, completed, cancelled }
+enum Priority { low, medium, high, urgent }
+enum UpdateType { status, comment, photo }
+enum PaymentStatus { pending, completed, failed, refunded }
+enum PaymentType { rent, deposit, fee }
+enum MessageStatus { sent, delivered, read }
+enum NotificationType { payment, maintenance, message, document, lease }
+enum IssueType { plumbing, electrical, structural, appliance, other }
+enum DocumentStatus { pending, approved, rejected }
+```
